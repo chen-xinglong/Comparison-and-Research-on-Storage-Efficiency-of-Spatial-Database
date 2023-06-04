@@ -1,0 +1,374 @@
+1.压缩后的大小
+SELECT pg_total_relation_size('poly10000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly10000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly10000;
+SELECT pg_total_relation_size('poly8000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly8000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly8000;
+SELECT pg_total_relation_size('poly6000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly6000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly6000;
+SELECT pg_total_relation_size('poly4000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly4000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly4000;
+SELECT pg_total_relation_size('poly2000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly2000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly2000;
+SELECT pg_total_relation_size('poly1000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly1000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly1000;
+1.polygon插入
+create table poly200(geom geometry);
+\copy poly200 from 'E:\\dataChange\\CountPoints\\CountPoints\\200.txt';
+create table poly400(geom geometry);
+\copy poly400 from 'E:\\dataChange\\CountPoints\\CountPoints\\400.txt';
+create table poly600(geom geometry);
+\copy poly600 from 'E:\\dataChange\\CountPoints\\CountPoints\\600.txt';
+create table poly800(geom geometry);
+\copy poly800 from 'E:\\dataChange\\CountPoints\\CountPoints\\800.txt';
+create table poly1000(geom geometry);
+\copy poly1000 from 'E:\\dataChange\\CountPoints\\CountPoints\\1000.txt';
+create table poly2000(geom geometry);
+\copy poly2000 from 'E:\\dataChange\\CountPoints\\CountPoints\\2000.txt';
+create table poly4000(geom geometry);
+\copy poly4000 from 'E:\\dataChange\\CountPoints\\CountPoints\\4000.txt';
+create table poly6000(geom geometry);
+\copy poly6000 from 'E:\\dataChange\\CountPoints\\CountPoints\\6000.txt';
+create table poly8000(geom geometry);
+\copy poly8000 from 'E:\\dataChange\\CountPoints\\CountPoints\\8000.txt';
+
+
+（2）lz4压缩插入 500、506、507、508、509、520、540、560、580、600、800、1000、2000、4000、6000、8000 （16个）
+create table poly1000(geom geometry compression lz4);
+\copy poly1000 from 'E:\\dataChange\\CountPoints\\CountPoints\\1000.txt';
+create table poly2000(geom geometry compression lz4);
+\copy poly2000 from 'E:\\dataChange\\CountPoints\\CountPoints\\2000.txt';
+create table poly4000(geom geometry compression lz4);
+\copy poly4000 from 'E:\\dataChange\\CountPoints\\CountPoints\\4000.txt';
+create table poly6000(geom geometry compression lz4);
+\copy poly6000 from 'E:\\dataChange\\CountPoints\\CountPoints\\6000.txt';
+create table poly8000(geom geometry compression lz4);
+\copy poly8000 from 'E:\\dataChange\\CountPoints\\CountPoints\\8000.txt';
+create table poly10000(geom geometry compression lz4);
+\copy poly10000 from 'E:\\dataChange\\CountPoints\\CountPoints\\10000.txt';
+（3）pglz压缩插入
+
+create table poly1000(geom geometry compression pglz);
+\copy poly1000 from 'E:\\dataChange\\CountPoints\\CountPoints\\1000.txt';
+create table poly2000(geom geometry compression pglz);
+\copy poly2000 from 'E:\\dataChange\\CountPoints\\CountPoints\\2000.txt';
+create table poly4000(geom geometry compression pglz);
+\copy poly4000 from 'E:\\dataChange\\CountPoints\\CountPoints\\4000.txt';
+create table poly6000(geom geometry compression pglz);
+\copy poly6000 from 'E:\\dataChange\\CountPoints\\CountPoints\\6000.txt';
+create table poly8000(geom geometry compression pglz);
+\copy poly8000 from 'E:\\dataChange\\CountPoints\\CountPoints\\8000.txt';
+create table poly10000(geom geometry compression pglz);
+\copy poly10000 from 'E:\\dataChange\\CountPoints\\CountPoints\\10000.txt';
+
+
+create table poly10000(geom geometry);
+\copy poly10000 from 'E:\\dataChange\\CountPoints\\CountPoints\\10000.txt';
+
+SELECT pg_column_size(geom) AS size FROM poly506 limit 2;
+
+SELECT length(ST_AsBinary(geom)) AS uncompressed_size FROM poly2000 limit 2;
+
+SELECT pg_total_relation_size('poly8000') AS total_size,
+       sum(length(ST_AsBinary(geom))) AS uncompressed_size,
+       100 - (pg_total_relation_size('poly8000') * 100 / sum(length(ST_AsBinary(geom)))) AS compression_ratio
+FROM poly8000;
+
+SELECT count(*) FROM poly2000 WHERE ST_Contains(geom, 'POLYGON((6 0,6 1,7 1,7 0,6 0))');
+
+SELECT count(*) FROM poly4000 WHERE ST_Contains(geom, 'POLYGON((6 0,6 1,7 1,7 0,6 0))');
+SELECT count(*) FROM poly6000 WHERE ST_Contains(geom, 'POLYGON((6 0,6 1,7 1,7 0,6 0))');
+SELECT count(*) FROM poly8000 WHERE ST_Contains(geom, 'POLYGON((6 0,6 1,7 1,7 0,6 0))');
+SELECT count(*) FROM poly10000 WHERE ST_Contains(geom, 'POLYGON((6 0,6 1,7 1,7 0,6 0))');
+
+、、
+test1=# \timing
+启用计时功能.
+
+//ok
+INSERT INTO tt(geom) VALUES (ST_PolygonFromText('POLYGON((6 0,6 1,7 1,7 0,6 0))',4326));
+//ok
+SELECT count(*) FROM tt WHERE ST_Contains(geom, ST_PointFromText('POLYGON((6 0,6 1,7 1,7 0,6 0))',4326));
+//
+ create table tt(geom geometry srid 4326);
+
+SELECT count(*) FROM poly2000 WHERE ST_Contains(geom, POINT(12 12));
+
+
+drop table poly6000;
+drop table poly2000;
+drop table poly4000;
+drop table poly8000;
+drop table poly1000;
+drop table poly10000;
+（5）查看压缩方式：
+\d+ my_table;
+（4）drop table 500、506、507、508、509、520、540、560、580、600、800、1000、2000、4000、6000、8000 （16个）
+drop table poly500,poly506,poly507,poly508,poly509,poly520,poly540,poly560,poly580,poly600,poly800,poly1000,poly2000,poly4000,poly6000,poly8000;
+drop table poly560,poly580,poly600,poly800,poly1000,poly2000,poly4000,poly6000,poly8000;
+(6)创建索引--导入数据
+create table poly2000(geom geometry);
+\copy poly2000 from 'E:\\dataChange\\CountPolygons\\CountPolygons\\2000.txt';
+create table poly4000(geom geometry);
+\copy poly4000 from 'E:\\dataChange\\CountPolygons\\CountPolygons\\4000.txt';
+create table poly6000(geom geometry);
+\copy poly6000 from 'E:\\dataChange\\CountPolygons\\CountPolygons\\6000.txt';
+create table poly8000(geom geometry);
+\copy poly8000 from 'E:\\dataChange\\CountPolygons\\CountPolygons\\8000.txt';
+create table poly10000(geom geometry);
+\copy poly10000 from 'E:\\dataChange\\CountPolygons\\CountPolygons\\10000.txt';
+
+2.查询表的大小
+默认pglz压缩：
+（1）获得表大小数据后发现，table size在polygon点数为600及更大时不再变化，一直为56KB，此时只有toast table size 改变。
+-- 查询所有表大小
+select relname, pg_size_pretty(pg_relation_size(relid)) as size from pg_stat_user_tables;
+poly2000        | 56 kB
+ poly800         | 56 kB
+poly600         | 56 kB
+ poly1000        | 56 kB
+ poly400         | 8000 kB
+ poly200         | 4000 kB
+ poly6000        | 56 kB
+ poly8000        | 56 kB
+ poly4000        | 56 kB
+-- 查询所有表的总大小，包括其索引大小
+select relname, pg_size_pretty(pg_total_relation_size(relid)) as size from pg_stat_user_tables;
+poly2000        | 32 MB
+ poly800         | 13 MB
+poly600         | 10232 kB
+ poly1000        | 16 MB
+ poly400         | 8032 kB
+ poly200         | 4032 kB
+ poly6000        | 95 MB
+ poly8000        | 127 MB
+ poly4000        | 64 MB
+
+(20polygons/table)
+poly4000        | 1352 kB
+ poly8000        | 2648 kB
+ poly800         | 320 kB
+ poly2000        | 696 kB
+ poly560         | 248 kB
+ poly1000        | 376 kB
+ poly6000        | 2000 kB
+ poly600         | 248 kB
+ poly580         | 248 kB
+（2）重新插入table，polygon点数为400~600之间。未用到toast table时，toast table size都为8192bytes（8kB）。
+（poly560、580、600的toast table size都为10128 kB，三者总大小也相同）
+500到520发生突变。
+
+-- 查询所有表大小（table size）
+select relname, pg_size_pretty(pg_relation_size(relid)) as size from pg_stat_user_tables;
+poly500         | 8000 kB
+ poly540         | 56 kB
+ poly420         | 8000 kB
+ poly580         | 56 kB
+ poly520         | 56 kB
+ poly440         | 8000 kB
+ poly560         | 56 kB
+ poly600         | 56 kB
+ poly480         | 8000 kB
+ poly400         | 8000 kB
+ poly460         | 8000 kB
+-- 查询所有表的总大小，包括其索引大小（poly560、580、600的toast table size都为10128 kB，三者总大小也相同）
+select relname, pg_size_pretty(pg_total_relation_size(relid)) as size from pg_stat_user_tables;
+poly500         | 8032 kB
+ poly540         | 9240 kB
+ poly420         | 8032 kB
+ poly580         | 10 MB
+ poly520         | 8744 kB
+ poly440         | 8032 kB
+ poly560         | 10 MB
+ poly600         | 10 MB
+ poly480         | 8032 kB
+ poly400         | 8032 kB
+ poly460         | 8032 kB
+、、、（还可以再测一下540~560之间的点数的polygon，研究为什么560之后表的总大小暂时不再变化。）
+（3）继续缩小，查看点数为500~509的polygon。（506、507发生突变）
+查看poly506 statistics,其free space、percent都减为0（为最小）。table size为7.81MB（8000KB）。
+table中一共有1000条polygon数据，table size为8000KB，则每条数据大小为8KB（8000/1000）大小。
+这证明了单个数据超过8KB大小时，就会使用toast。
+-- 查询所有表大小（table size）
+select relname, pg_size_pretty(pg_relation_size(relid)) as size from pg_stat_user_tables;
+poly500         | 8000 kB
+ poly502         | 8000 kB
+ poly508         | 56 kB
+ poly520         | 56 kB
+ poly506         | 8000 kB
+ poly509         | 56 kB
+ poly504         | 8000 kB
+ poly505         | 8000 kB
+ poly501         | 8000 kB
+ poly507         | 56 kB
+ poly503         | 8000 kB
+-- 查询所有表的总大小，包括其索引大小
+select relname, pg_size_pretty(pg_total_relation_size(relid)) as size from pg_stat_user_tables;
+poly500         | 8032 kB
+ poly502         | 8032 kB
+ poly508         | 8464 kB
+ poly520         | 8744 kB
+ poly506         | 8032 kB
+ poly509         | 8496 kB
+ poly504         | 8032 kB
+ poly505         | 8032 kB
+ poly501         | 8032 kB
+ poly507         | 8464 kB
+ poly503         | 8032 kB
+（1）pglz压缩，比poly507更多点的polygon。500、506、507、508、509、520、540、560、580、600、800、1000、2000、4000、6000、8000 （16个）
+-- 查询所有表大小（table size）
+select relname, pg_size_pretty(pg_relation_size(relid)) as size from pg_stat_user_tables;
+-- 查询所有表的总大小，包括其索引大小
+select relname, pg_size_pretty(pg_total_relation_size(relid)) as size from pg_stat_user_tables;
+poly6000        | 95 MB
+ poly507         | 8464 kB
+ poly500         | 8032 kB
+ poly540         | 9240 kB
+ poly8000        | 127 MB
+ poly800         | 13 MB
+ poly520         | 8744 kB
+ poly580         | 10 MB
+ poly509         | 8496 kB
+ poly506         | 8032 kB
+ poly2000        | 32 MB
+ poly1000        | 16 MB
+ poly560         | 10 MB
+ poly600         | 10 MB
+ poly508         | 8464 kB
+ poly4000        | 64 MB
+
+(20polygons/table)
+poly580         | 248 kB
+ poly2000        | 696 kB
+ poly560         | 248 kB
+ poly4000        | 1352 kB
+ poly8000        | 2656 kB
+ poly600         | 248 kB
+ poly6000        | 2000 kB
+ poly800         | 320 kB
+ poly1000        | 376 kB
+（2）lz4压缩，比poly507更多点的polygon。500、506、507、508、509、520、540、560、580、600、800、1000、2000、4000、6000、8000 （16个）
+-- 查询所有表大小（table size）
+select relname, pg_size_pretty(pg_relation_size(relid)) as size from pg_stat_user_tables;
+poly520         | 56 kB
+ poly540         | 56 kB
+ poly4000        | 56 kB
+ poly500         | 8000 kB
+ poly506         | 8000 kB
+ poly600         | 56 kB
+ poly509         | 56 kB
+ poly1000        | 56 kB
+ poly800         | 56 kB
+ poly8000        | 56 kB
+ poly508         | 56 kB
+ poly507         | 160 kB
+ poly580         | 56 kB
+ poly560         | 56 kB
+ poly2000        | 56 kB
+ poly6000        | 56 kB
+-- 查询所有表的总大小，包括其索引大小
+select relname, pg_size_pretty(pg_total_relation_size(relid)) as size from pg_stat_user_tables;
+poly520         | 8736 kB
+ poly540         | 9240 kB
+ poly4000        | 63 MB
+ poly500         | 8032 kB
+ poly506         | 8032 kB
+ poly600         | 10 MB
+ poly509         | 8496 kB
+ poly1000        | 16 MB
+ poly800         | 13 MB
+ poly8000        | 127 MB
+ poly508         | 8464 kB
+ poly507         | 8456 kB
+ poly580         | 10 MB
+ poly560         | 10 MB
+ poly2000        | 32 MB
+ poly6000        | 95 MB
+
+(20polygons/table)
+poly580         | 248 kB
+ poly560         | 248 kB
+ poly4000        | 1344 kB
+ poly8000        | 2648 kB
+ poly1000        | 376 kB
+ poly6000        | 2000 kB
+ poly600         | 248 kB
+ poly2000        | 688 kB
+ poly800         | 320 kB
+
+3.创建索引
+参考:https://www.modb.pro/db/185860
+CREATE INDEX index2000 ON poly2000 USING gist (geom);
+CREATE INDEX index4000 ON poly4000 USING gist (geom);
+CREATE INDEX index6000 ON poly6000 USING gist (geom);
+CREATE INDEX index8000 ON poly8000 USING gist (geom);
+CREATE INDEX index10000 ON poly10000 USING gist (geom);
+
+CREATE INDEX index2000 ON poly2000 USING hash(geom);
+CREATE INDEX index4000 ON poly4000 USING hash(geom);
+CREATE INDEX index6000 ON poly6000 USING hash(geom);
+CREATE INDEX index8000 ON poly8000 USING hash(geom);
+CREATE INDEX index10000 ON poly10000 USING hash(geom);
+
+CREATE INDEX index2000 ON poly2000 USING btree(geom);
+CREATE INDEX index4000 ON poly4000 USING btree(geom);
+CREATE INDEX index6000 ON poly6000 USING btree(geom);
+CREATE INDEX index8000 ON poly8000 USING btree(geom);
+CREATE INDEX index10000 ON poly10000 USING btree(geom);
+
+CREATE INDEX index2000 ON poly2000 USING spgist(geom);
+CREATE INDEX index4000 ON poly4000 USING spgist(geom);
+CREATE INDEX index6000 ON poly6000 USING spgist(geom);
+CREATE INDEX index8000 ON poly8000 USING spgist(geom);
+CREATE INDEX index10000 ON poly10000 USING spgist(geom);
+
+CREATE INDEX index2000 ON poly2000 USING gin(geom);
+CREATE INDEX index4000 ON poly4000 USING gin(geom);
+CREATE INDEX index6000 ON poly6000 USING gin(geom);
+CREATE INDEX index8000 ON poly8000 USING gin(geom);
+CREATE INDEX index10000 ON poly10000 USING gin(geom);
+
+CREATE INDEX index2000 ON poly2000 USING brin(geom);
+CREATE INDEX index4000 ON poly4000 USING brin(geom);
+CREATE INDEX index6000 ON poly6000 USING brin(geom);
+CREATE INDEX index8000 ON poly8000 USING brin(geom);
+CREATE INDEX index10000 ON poly10000 USING brin(geom);
+
+
+drop index index2000;
+drop index index4000;
+drop index index6000;
+drop index index8000;
+drop index index10000;
+(1)gist索引
+2000 4000 6000 8000 10000
+104 KB 192kb 256kb 352kb 440kb
+(2)hash
+2000 4000 6000 8000 10000
+80KB 144KB 272KB 272KB 528KB
+(3)btree
+2000 4000 6000 8000 10000
+512KB 1000KB 1.45MB 1.93MB 2.41MB
+(4)sp-gist
+2000 4000 6000 8000 10000
+136KB 192 280 360 440KB
+(5)gin
+2000 4000 6000 8000 10000
+对访问方法 "gin" 数据类型 geometry 没有默认的操作符表。（对这种索引方法不再测量）
+(6)brin
+2000 4000 6000 8000 10000
+24KB 24KB 24KB 24KB 24KB
+
+7.查看是否包含
+SELECT * FROM table_name WHERE ST_Contains(geom, 'POINT(1 1)');

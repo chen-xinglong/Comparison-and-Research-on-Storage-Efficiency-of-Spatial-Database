@@ -1,0 +1,1183 @@
+1.默认创建（row format：dynamic）
+{//代码
+CREATE TABLE `poly8000` (
+  `geom` geometry DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+}
+poly(构成polygon的点数不同)
+200 400 600 800 1000 2000 4000 6000 8000
+4.5MB 8.5MB 336KB 336KB 1.5MB 1.5MB 1.5MB 2.5MB 2.5MB
+
+show table status \G;
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 79462
+    Data_length: 1589248
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:27
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 1000
+ Avg_row_length: 16
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:26
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 79462
+    Data_length: 1589248
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:27
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 501
+ Avg_row_length: 17822
+    Data_length: 8929280
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:26
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 79462
+    Data_length: 1589248
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:27
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 17203
+    Data_length: 344064
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:26
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 819
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:27
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 17203
+    Data_length: 344064
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:26
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 20
+ Avg_row_length: 819
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 10:49:26
+    Update_time: 2023-04-24 10:49:27
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+2.innoDB   row_format=COMPRESSED KEY_BLOCK_SIZE=8
+show table status \G;
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 1000
+ Avg_row_length: 8
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:19
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 8675328
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 65945
+    Data_length: 1318912
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:49
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 524288
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:15:51
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=8
+        Comment:
+
+3.
+alter table poly200 KEY_BLOCK_SIZE=4  ; 
+alter table poly400   KEY_BLOCK_SIZE=4  ; 
+alter table poly600   KEY_BLOCK_SIZE=4  ; 
+alter table poly800   KEY_BLOCK_SIZE=4  ; 
+alter table poly1000   KEY_BLOCK_SIZE=4  ; 
+alter table poly2000   KEY_BLOCK_SIZE=4  ; 
+alter table poly4000   KEY_BLOCK_SIZE=4  ; 
+alter table poly6000   KEY_BLOCK_SIZE=4  ; 
+alter table poly8000   KEY_BLOCK_SIZE=4  ; 
+show table status \G;
+
+show table status \G;
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:19
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 1000
+ Avg_row_length: 8
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:16
+    Update_time: 2023-04-24 11:16:19
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:19
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 8675328
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:17
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 65945
+    Data_length: 1318912
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:19
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:18
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:19
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:18
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 524288
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:26:20
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=4
+
+4.
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:15
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 1000
+ Avg_row_length: 8
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:27:57
+    Update_time: 2023-04-24 11:16:19
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:16
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 8675328
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:11
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 65945
+    Data_length: 1318912
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:16
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:15
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:17
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:15
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 524288
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:28:18
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=2
+
+5.
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:52
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 1000
+ Avg_row_length: 8
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:42
+    Update_time: 2023-04-24 11:16:19
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:53
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 8675328
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:45
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 65945
+    Data_length: 1318912
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:53
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:52
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:55
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:52
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 524288
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:29:56
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=1
+6.
+*************************** 1. row ***************************
+           Name: poly1000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:54
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 2. row ***************************
+           Name: poly200
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 1000
+ Avg_row_length: 8
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:51
+    Update_time: 2023-04-24 11:16:19
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 3. row ***************************
+           Name: poly2000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:54
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 4. row ***************************
+           Name: poly400
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 8675328
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 2097152
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:52
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 5. row ***************************
+           Name: poly4000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 65945
+    Data_length: 1318912
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:55
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 6. row ***************************
+           Name: poly600
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:54
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 7. row ***************************
+           Name: poly6000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:55
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 8. row ***************************
+           Name: poly800
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 39731
+    Data_length: 794624
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:54
+    Update_time: 2023-04-24 11:16:20
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+        Comment:
+*************************** 9. row ***************************
+           Name: poly8000
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compressed
+           Rows: 20
+ Avg_row_length: 409
+    Data_length: 8192
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 524288
+ Auto_increment: NULL
+    Create_time: 2023-04-24 11:30:56
+    Update_time: 2023-04-24 11:16:21
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options: row_format=COMPRESSED KEY_BLOCK_SIZE=16
+
+
+6.spatial index(ENGINE=MYISAM才能创建空间索引，使用innodb无法创建空间索引)
+drop table poly2000;
+drop table poly4000;
+drop table poly6000;
+drop table poly8000;
+drop table poly10000;
+
+create table poly2000(geom  geometry NOT NULL,SPATIAL INDEX(geom))  ENGINE=MYISAM; 
+create table poly4000(geom  geometry NOT NULL,SPATIAL INDEX(geom)) ENGINE=MYISAM  ; 
+create table poly6000(geom  geometry NOT NULL,SPATIAL INDEX(geom))  ENGINE=MYISAM ; 
+create table poly8000(geom  geometry NOT NULL,SPATIAL INDEX(geom))  ENGINE=MYISAM ; 
+create table poly10000(geom  geometry NOT NULL,SPATIAL INDEX(geom))  ENGINE=MYISAM ; 
+
+load data infile "E:\\dataChange\\CountPolygons\\CountPolygons\\2000.txt" replace into table poly2000 lines terminated by'\r\n'
+(@c1)
+set geom=st_geomfromtext(@c1);
+load data infile "E:\\dataChange\\CountPolygons\\CountPolygons\\4000.txt" replace into table poly4000 lines terminated by'\r\n'
+(@c2)
+set geom=st_geomfromtext(@c2);
+load data infile "E:\\dataChange\\CountPolygons\\CountPolygons\\6000.txt" replace into table poly6000 lines terminated by'\r\n'
+(@c3)
+set geom=st_geomfromtext(@c3);
+load data infile "E:\\dataChange\\CountPolygons\\CountPolygons\\8000.txt" replace into table poly8000 lines terminated by'\r\n'
+(@c4)
+set geom=st_geomfromtext(@c4);
+load data infile "E:\\dataChange\\CountPolygons\\CountPolygons\\10000.txt" replace into table poly10000 lines terminated by'\r\n'
+(@c5)
+set geom=st_geomfromtext(@c5);
+
+
+ show table status \G;
+*************************** 1. row ***************************
+           Name: poly10000
+         Engine: MyISAM
+        Version: 10
+     Row_format: Dynamic
+           Rows: 10000
+ Avg_row_length: 188
+    Data_length: 1880000
+Max_data_length: 281474976710655
+   Index_length: 628736
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2023-04-24 11:48:56
+    Update_time: 2023-04-24 11:48:59
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 2. row ***************************
+           Name: poly2000
+         Engine: MyISAM
+        Version: 10
+     Row_format: Dynamic
+           Rows: 2000
+ Avg_row_length: 188
+    Data_length: 376000
+Max_data_length: 281474976710655
+   Index_length: 124928
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2023-04-24 11:48:56
+    Update_time: 2023-04-24 11:48:57
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 3. row ***************************
+           Name: poly4000
+         Engine: MyISAM
+        Version: 10
+     Row_format: Dynamic
+           Rows: 4000
+ Avg_row_length: 188
+    Data_length: 752000
+Max_data_length: 281474976710655
+   Index_length: 256000
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2023-04-24 11:48:56
+    Update_time: 2023-04-24 11:48:57
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 4. row ***************************
+           Name: poly6000
+         Engine: MyISAM
+        Version: 10
+     Row_format: Dynamic
+           Rows: 6000
+ Avg_row_length: 188
+    Data_length: 1128000
+Max_data_length: 281474976710655
+   Index_length: 377856
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2023-04-24 11:48:56
+    Update_time: 2023-04-24 11:48:57
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+*************************** 5. row ***************************
+           Name: poly8000
+         Engine: MyISAM
+        Version: 10
+     Row_format: Dynamic
+           Rows: 8000
+ Avg_row_length: 188
+    Data_length: 1504000
+Max_data_length: 281474976710655
+   Index_length: 513024
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2023-04-24 11:48:56
+    Update_time: 2023-04-24 11:48:57
+     Check_time: NULL
+      Collation: utf8mb4_0900_ai_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+

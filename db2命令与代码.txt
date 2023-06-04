@@ -1,0 +1,106 @@
+1.创建数据库
+	参考：https://www.w3cschool.cn/db2tutorial/db2tutorial-5v7f3j78.html
+在“DB2 命令窗口 - Administrator”里
+（1）在当前实例下查看被包含的所有数据库
+db2 list db directory
+（2）在当前实例下创建数据库geom
+db2 create db geom
+（回车后等待一会）
+2.db2删除数据库报错
+SQL1035N  操作失败，因为无法以请求的方式来连接指定的数据库。  SQLSTATE=57019
+参考：https://blog.csdn.net/JinKin_OldWang/article/details/100944369
+E:\IBM-DB2v11.1\programData\BIN>db2 drop db testgeom
+SQL1035N  操作失败，因为无法以请求的方式来连接指定的数据库。  SQLSTATE=57019
+
+E:\IBM-DB2v11.1\programData\BIN>db2 connect to sample
+
+   数据库连接信息
+
+ 数据库服务器         = DB2/NT64 11.1.3.3
+ SQL 授权标识         = 10482
+ 本地数据库别名       = SAMPLE
+
+
+E:\IBM-DB2v11.1\programData\BIN>db2 list applications
+
+授权标识  应用程序名    应用程序    应用程序标识                  数据库   代理程序
+                        句柄                                      名称     序号
+-------- -------------- ---------- -------------------------------------------------------------- -------- -----
+10482    db2bp.exe      478        *LOCAL.DB2.230506142931                                        SAMPLE   1
+
+
+E:\IBM-DB2v11.1\programData\BIN>db2 force applications all
+DB20000I  FORCE APPLICATION 命令成功完成。
+DB21024I  此命令为异步的，可能无法立即生效。
+
+
+E:\IBM-DB2v11.1\programData\BIN>db2 deactivate db sample
+SQL1493N  此命令失败，因为应用程序已与活动的数据库连接。
+
+E:\IBM-DB2v11.1\programData\BIN>db2 terminate
+DB20000I  TERMINATE 命令成功完成。
+
+E:\IBM-DB2v11.1\programData\BIN>db2 deactivate db sample
+DB20000I  DEACTIVATE DATABASE 命令成功完成。
+
+E:\IBM-DB2v11.1\programData\BIN>db2 drop db sample
+DB20000I  DROP DATABASE 命令成功完成。
+
+E:\IBM-DB2v11.1\programData\BIN>db2 drop db testgeom
+DB20000I  DROP DATABASE 命令成功完成。
+
+
+3.使用数据库
+（1）激活数据库
+db2 activate db geom
+（2）停用数据库
+db2 deactivate db geom
+（3）链接数据库
+db2 connect to geom
+（4）对数据库启用 空间数据
+db2se enable_db geom
+（5）创建表
+SET CURRENT SCHEMA "10482";--设置schema
+CREATE TABLE gt(geom db2gse.ST_geometry);
+（6）创建空间列
+db2 CREATE TABLE my_table ( id INTEGER, geometry db2gse.ST_Geometry)
+（7）创建空间网格索引（只有这一种索引方式，但有三个参数）
+https://www.ibm.com/docs/en/db2/10.1.0?topic=data-creating-spatial-grid-indexes
+代码：SET CURRENT SCHEMA "10482";
+CREATE INDEX myindex ON g(geom) extend USING  db2gse.spatial_index(1.0, 10.0, 100.0) ;
+（8）读取空间数据
+SELECT db2gse.st_astext(geom) FROM gt;
+（9）插入空间数据
+INSERT INTO gt(geom) VALUES (db2gse.ST_geometry('Polygon ((0 0, 0 1, 1 1, 1 0, 0 0))'));
+
+db2 UPDATE STOGROUPS SET COORDSYS = 'EPSG:4326' WHERE STOGROUP_NAME = 'DB2GSE_STOGROUP'
+
+db2se register_gc  geom -geocoderName mygeocoder -srid 4326
+
+db2se create_cs geom -coordsysName mycoordsys  -definition GEOCS[\"GCS_NORTH_AMERICAN_1983\",DATUM["D_North_American_1983\", SPHEROID[\"GRS_1980\",6387137,298.257222101]],PRIMEM[\"Greenwich\",0], UNIT["Degree\" ]]
+db2se create_srs geom -srsName mysrs -srsID 100 -xScale 10 -coordsysName GCS_North_American_1983
+
+
+
+CREATE TABLE sample_poly ( geometry db2gse.ST_Polygon);
+INSERT INTO sample_poly
+  VALUES (db2gse.ST_Polygon ('polygon 
+                    ((110 120, 110 140, 130 140, 130 120, 110 120))', 1))
+
+只创建成功了三角形与四边形
+
+查看表的大小：
+SELECT SUBSTR(TABSCHEMA,1,18) TABSCHEMA,SUBSTR(TABNAME,1,30) TABNAME,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB FROM SYSIBMADM.ADMINTABINFO WHERE TABSCHEMA ='10482';
+
+、、查看表的大小与索引大小
+db2pd -db geom -tcbstats
+
+db2 inspect rowcompestimate table name poly4 results keep tbfile 
+
+压缩并重组表：
+https://blog.csdn.net/hyfstyle/article/details/105489899
+
+5.创建空间索引：
+参考:https://webhelp.esri.com/arcgisdesktop/9.2/index.cfm?TopicName=Creating_spatial_indexes_on_tables_with_an_ST_Geometry_column
+https://www.ibm.com/docs/en/db2/11.1?topic=aracp-admin-get-index-info-table-function-return-index-information
+CREATE INDEX sa_idx ON poly4 (geometry) EXTEND USING db2gse.spatial_index (1.0, 3.0, 0.0);
